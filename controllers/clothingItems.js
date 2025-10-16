@@ -10,7 +10,7 @@ const getItems = (req, res) => {
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       console.error(err);
-      res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
@@ -23,9 +23,9 @@ const createItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        res.status(BAD_REQUEST_ERROR).send({ message: err.message });
+        return res.status(BAD_REQUEST_ERROR).send({ message: err.message });
       }
-      res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
@@ -40,7 +40,7 @@ const updateItem = (req, res) => {
     .orFail()
     .then((item) => res.status(200).send(item))
     .catch((err) => {
-      res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
@@ -53,12 +53,14 @@ const deleteItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
-      } else if (err.name === "CastError") {
-        res.status(BAD_REQUEST_ERROR).send({ message: "Invalid item ID" });
-      } else {
-        res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+        return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
       }
+      if (err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_ERROR)
+          .send({ message: "Invalid item ID" });
+      }
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
@@ -73,12 +75,14 @@ const likeItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
-      } else if (err.name === "CastError") {
-        res.status(BAD_REQUEST_ERROR).send({ message: "Invalid item ID" });
-      } else {
-        res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+        return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
       }
+      if (err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_ERROR)
+          .send({ message: "Invalid item ID" });
+      }
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
@@ -93,12 +97,14 @@ const dislikeItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
-      } else if (err.name === "CastError") {
-        res.status(BAD_REQUEST_ERROR).send({ message: "Invalid item ID" });
-      } else {
-        res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
+        return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
       }
+      if (err.name === "CastError") {
+        return res
+          .status(BAD_REQUEST_ERROR)
+          .send({ message: "Invalid item ID" });
+      }
+      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
     });
 };
 
