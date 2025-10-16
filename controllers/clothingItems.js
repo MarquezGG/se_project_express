@@ -39,9 +39,9 @@ const updateItem = (req, res) => {
   )
     .orFail()
     .then((item) => res.status(200).send(item))
-    .catch((err) => {
-      return res.status(INTERNAL_SERVER_ERROR).send({ message: err.message });
-    });
+    .catch((err) =>
+      res.status(INTERNAL_SERVER_ERROR).send({ message: err.message })
+    );
 };
 
 const deleteItem = (req, res) => {
