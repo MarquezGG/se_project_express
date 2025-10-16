@@ -29,21 +29,6 @@ const createItem = (req, res) => {
     });
 };
 
-const updateItem = (req, res) => {
-  const { itemId } = req.params;
-  const { name, weather, imageUrl } = req.body;
-  ClothingItem.findByIdAndUpdate(
-    itemId,
-    { name, weather, imageUrl },
-    { new: true }
-  )
-    .orFail()
-    .then((item) => res.status(200).send(item))
-    .catch((err) =>
-      res.status(INTERNAL_SERVER_ERROR).send({ message: err.message })
-    );
-};
-
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
 
@@ -111,7 +96,6 @@ const dislikeItem = (req, res) => {
 module.exports = {
   getItems,
   createItem,
-  updateItem,
   deleteItem,
   likeItem,
   dislikeItem,
