@@ -1,9 +1,9 @@
-const ClothingItem = require("../models/clothingItem.js");
+const ClothingItem = require("../models/clothingItem");
 const {
   BAD_REQUEST_ERROR,
   NOT_FOUND_ERROR,
   INTERNAL_SERVER_ERROR,
-} = require("../utils/errors.js");
+} = require("../utils/errors");
 
 const getItems = (req, res) => {
   ClothingItem.find({})
