@@ -4,8 +4,6 @@ const mainRouter = require("./routes/index");
 
 const app = express();
 const { PORT = 3001 } = process.env;
-const userRouter = require("./routes/users");
-const routes = require("./routes/index");
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/wtwr_db")
@@ -24,8 +22,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/", mainRouter);
-app.use("/users", userRouter);
-app.use(routes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
