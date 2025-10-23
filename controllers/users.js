@@ -1,5 +1,5 @@
-const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
 const {
   BAD_REQUEST_ERROR,
@@ -7,7 +7,6 @@ const {
   NOT_FOUND_ERROR,
   CONFLICT_ERROR,
   INTERNAL_SERVER_ERROR,
-  ACCESS_FORBIDDEN_ERROR,
 } = require("../utils/errors");
 
 const getUsers = (req, res) => {
@@ -26,7 +25,7 @@ const createUser = (req, res) => {
   if (!name || !avatar || !email || !password) {
     return res.status(BAD_REQUEST_ERROR).send({ message: "Invalid user data" });
   }
-  User.findOne({ email })
+  return User.findOne({ email })
     .then((existing) => {
       if (existing) {
         return res
@@ -102,9 +101,9 @@ const login = (req, res) => {
       });
       return res.status(200).send({ token });
     })
-    .catch((err) => {
-      return res.status(UNAUTHORIZED_ERROR).send({ message: err.message });
-    });
+    .catch((err) =>
+      res.status(UNAUTHORIZED_ERROR).send({ message: err.message })
+    );
 };
 
 const updateProfile = (req, res) => {

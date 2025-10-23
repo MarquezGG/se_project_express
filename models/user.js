@@ -31,14 +31,16 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", function hashPassword(next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
 
-  bcrypt
+  return bcrypt
     .hash(this.password, 10)
     .then((hash) => {
       this.password = hash;
-      next();
+      return next();
     })
     .catch(next);
 });
