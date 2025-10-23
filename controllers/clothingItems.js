@@ -3,6 +3,7 @@ const {
   BAD_REQUEST_ERROR,
   NOT_FOUND_ERROR,
   INTERNAL_SERVER_ERROR,
+  ACCESS_FORBIDDEN_ERROR,
 } = require("../utils/errors");
 
 const getItems = (req, res) => {
@@ -37,10 +38,20 @@ const createItem = (req, res) => {
 
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
+  const userId = req.user._id;
 
-  ClothingItem.findByIdAndDelete(itemId)
+  ClothingItem.findById(itemId)
     .orFail()
-    .then((item) => res.status(200).send(item))
+    .then((item) => {
+      if (item.owner.toString() !== userId.toString()) {
+        return res
+          .status(ACCESS_FORBIDDEN_ERROR)
+          .send({ message: "Forbidden: You cannot delete this item" });
+      }
+      return ClothingItem.findByIdAndDelete(itemId).then((deletedItem) =>
+        res.status(200).send(deletedItem)
+      );
+    })
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
