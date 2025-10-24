@@ -101,9 +101,11 @@ const login = (req, res) => {
       });
       return res.status(200).send({ token });
     })
-    .catch((err) =>
-      res.status(UNAUTHORIZED_ERROR).send({ message: err.message })
-    );
+    .catch(() => {
+      return res
+        .status(UNAUTHORIZED_ERROR)
+        .send({ message: "Invalid email or password" });
+    });
 };
 
 const updateProfile = (req, res) => {
