@@ -26,8 +26,6 @@ The back-end project is focused on creating a server for the WTWR application. Y
 
 ### Users
 
-- `GET /users` - Get all users
-- `GET /users/:userId` - Get user by ID
 - `POST /users` - Create a new user
 
 ### Clothing Items

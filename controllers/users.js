@@ -9,17 +9,6 @@ const {
   INTERNAL_SERVER_ERROR,
 } = require("../utils/errors");
 
-const getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
-    .catch((err) => {
-      console.error(err);
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "An error has occurred on the server." });
-    });
-};
-
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
   if (!name || !avatar || !email || !password) {
@@ -101,10 +90,20 @@ const login = (req, res) => {
       });
       return res.status(200).send({ token });
     })
-    .catch(() => {
+    .catch((err) => {
+      if (
+        err &&
+        (err.message === "Incorrect email or password" ||
+          err.name === "AuthenticationError")
+      ) {
+        return res
+          .status(UNAUTHORIZED_ERROR)
+          .send({ message: "Invalid email or password" });
+      }
+      console.error(err);
       return res
-        .status(UNAUTHORIZED_ERROR)
-        .send({ message: "Invalid email or password" });
+        .status(INTERNAL_SERVER_ERROR)
+        .send({ message: "An error has occurred on the server." });
     });
 };
 
@@ -138,7 +137,6 @@ const updateProfile = (req, res) => {
 };
 
 module.exports = {
-  getUsers,
   createUser,
   getCurrentUser,
   updateProfile,
