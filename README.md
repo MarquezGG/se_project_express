@@ -43,11 +43,16 @@ The back-end project is focused on creating a server for the WTWR application. Y
 - `routes/` - API route definitions
 - `utils/` - Configuration and error constants
 
-### Testing
+## Project Pitch Videos
 
-Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+Check out these videos, where I describe my project
+and some challenges I faced while building it:
 
-## Project Pitch Video
+- [First Video Title](https://drive.google.com/file/d/1ystwGq1bLl2MGPGUhTY5Zj3_Bt0-FmIL/view?usp=sharing)
+- [Second Video Title](https://www.loom.com/share/efd7cb26bc3a451d8f54d141277599c4)
 
-Check out [this video](https://drive.google.com/file/d/1ystwGq1bLl2MGPGUhTY5Zj3_Bt0-FmIL/view?usp=sharing), where I describe my
-project and some challenges I faced while building it.
+## Domain names of frontend and backend
+
+https://tripletenrules.jumpingcrab.com
+https://www.tripletenrules.jumpingcrab.com/
+http://api.tripletenrules.jumpingcrab.com
